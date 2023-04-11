@@ -1,0 +1,35 @@
+1-create database TheCampSupermarketDB;
+2-CREATE TABLE thecampmarket (
+    Id INT NOT NULL UNIQUE,
+    product_name VARCHAR(255) NOT NULL,
+    product_value INT NOT NULL,
+    product_quantity INT NOT NULL,
+    record_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (Id));
+
+3-CREATE TABLE thecampmarket (
+    Id INT NOT NULL UNIQUE,
+    product_ID INT NOT NULL,
+    Sells_quantity INT NOT NULL,
+    recorded_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (Id)
+FOREIGN KEY (product_ID) REFERENCES thecampmarket(Id));
+
+4-INSERT INTO thecampmarket (Id, product_name, product_value, product_quantity, record_date) 
+VALUES (1, "Pepsi", 5, 20, current_timestamp()),
+ (2, "Cocacola", 5, 10, current_timestamp()),
+ (3, "Chepsi", 6, 3, current_timestamp());
+
+5-INSERT INTO thecamp_market_sells (Id, product_ID, Sells_quantity, recorded_date) 
+VALUES (1, 1, 3, current_timestamp()),
+(2, 2, 2, current_timestamp()),
+(3, 3, 1, current_timestamp());
+
+6-SELECT  thecampmarket.Id,product_name ,product_value ,product_quantity,Sells_quantity, record_date
+FROM  thecampmarket ,thecamp_market_sells
+WHERE thecampmarket.Id = thecamp_market_sells.product_ID;
+
+7-SELECT thecampmarket.Id, SUM(thecamp_market_sells.sells_quantity) 
+FROM thecampmarket,thecamp_market_sells 
+WHERE thecampmarket.Id = thecamp_market_sells.product_ID 
+GROUP BY thecamp_market_sells.product_ID;
